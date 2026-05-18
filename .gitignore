@@ -1,0 +1,32 @@
+# Build output
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+packages/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+.tools/
+
+# OS files
+Thumbs.db
+Desktop.ini
