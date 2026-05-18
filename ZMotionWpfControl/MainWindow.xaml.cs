@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Input;
+using ZMotionWpfControl.Hardware;
 using ZMotionWpfControl.Services;
 using ZMotionWpfControl.ViewModels;
 
@@ -12,7 +13,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        _viewModel = new MainViewModel(new MockMotionController());
+        _viewModel = new MainViewModel(new MotionController(new ZMotionCardApi()));
         DataContext = _viewModel;
     }
 

@@ -7,5 +7,10 @@
     <UseWPF>true</UseWPF>
     <AssemblyName>ZMotionWpfControl</AssemblyName>
     <RootNamespace>ZMotionWpfControl</RootNamespace>
+    <NoWarn>$(NoWarn);CS8981</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="zauxdll.dll" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="zmotion.dll" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>

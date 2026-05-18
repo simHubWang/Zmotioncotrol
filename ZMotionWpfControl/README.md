@@ -24,7 +24,7 @@
 - `Hardware/SimulatedMotionCardApi.cs`：模拟控制卡。
 - `Hardware/ZMotionCardApi.cs`：正运动真实控制卡 API 接入位置。
 
-当前界面调用的是 `MockMotionController`，内部使用 `SimulatedMotionCardApi`。接入正运动控制卡时，在 `ZMotionCardApi` 里调用正运动提供的 `zauxdll.dll` / `zmcaux.cs` API，例如：
+当前界面调用的是 `MotionController(new ZMotionCardApi())`，真实控制卡 API 已接到 `zauxdll.dll` / `Zmcaux.cs`。
 
 - `ZAux_OpenEth`
 - `ZAux_Close`
@@ -35,16 +35,16 @@
 - `ZAux_Direct_Single_Cancel`
 - `ZAux_Direct_GetDpos`
 
-然后在 `MainWindow.xaml.cs` 中把：
-
-```csharp
-private readonly IMotionController _controller = new MockMotionController();
-```
-
-替换为真实控制器组合：
+如果需要不连接硬件只演示界面，可以在 `MainWindow.xaml.cs` 中把：
 
 ```csharp
 _viewModel = new MainViewModel(new MotionController(new ZMotionCardApi()));
+```
+
+临时替换为模拟控制器：
+
+```csharp
+_viewModel = new MainViewModel(new MockMotionController());
 ```
 
 ## 运行

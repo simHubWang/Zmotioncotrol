@@ -37,7 +37,7 @@ public sealed class MainViewModel : ObservableObject
         JogNegativeCommand = new AsyncRelayCommand(() => JogAsync(-1));
         StopJogCommand = new AsyncRelayCommand(StopJogAsync);
 
-        AddLog("程序启动，当前使用模拟控制器。");
+        AddLog("程序启动，当前使用正运动控制卡 API。");
     }
 
     public ObservableCollection<AxisStatus> Axes { get; }
