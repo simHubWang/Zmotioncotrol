@@ -207,18 +207,28 @@ public sealed class ZMotionCardApi : IMotionCardApi
         var appDirectory = AppContext.BaseDirectory;
         var zauxPath = Path.Combine(appDirectory, "zauxdll.dll");
         var zmotionPath = Path.Combine(appDirectory, "zmotion.dll");
+        var msvcr100AppPath = Path.Combine(appDirectory, "MSVCR100.dll");
+        var msvcr100SystemPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "MSVCR100.dll");
 
         if (!File.Exists(zauxPath) || !File.Exists(zmotionPath))
         {
             throw new InvalidOperationException(
                 $"正运动 DLL 未复制到运行目录。运行目录：{appDirectory}");
         }
+
+        if (!File.Exists(msvcr100AppPath) && !File.Exists(msvcr100SystemPath))
+        {
+            throw new InvalidOperationException(
+                "缺少 64 位 Microsoft Visual C++ 2010 运行库文件 MSVCR100.dll。"
+                + "请安装 Microsoft Visual C++ 2010 SP1 Redistributable Package (x64)，"
+                + $"或将厂家提供的 64 位 MSVCR100.dll 放到运行目录：{appDirectory}");
+        }
     }
 
     private static string CreateNativeLoadErrorMessage()
     {
         return "已找到 zauxdll.dll 和 zmotion.dll，但 Windows 无法加载 zauxdll.dll。"
-            + "通常是缺少它依赖的 VC++ 运行库或厂家配套 DLL。"
+            + "通常是缺少它依赖的 VC++ 2010 x64 运行库或厂家配套 DLL。"
             + $"运行目录：{AppContext.BaseDirectory}";
     }
 }

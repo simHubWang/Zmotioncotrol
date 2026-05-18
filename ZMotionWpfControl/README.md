@@ -50,3 +50,5 @@ _viewModel = new MainViewModel(new MockMotionController());
 ## 运行
 
 需要 Windows 和支持 WPF 的 .NET SDK/Visual Studio。打开 `ZMotionWpfControl.csproj` 后运行即可。
+
+正运动官方 DLL 依赖 64 位 Microsoft Visual C++ 2010 运行库。如果连接控制卡时报 `Unable to load DLL 'zauxdll.dll'`，请安装 `Microsoft Visual C++ 2010 SP1 Redistributable Package (x64)`，或确认 `C:\Windows\System32\MSVCR100.dll` 存在。
