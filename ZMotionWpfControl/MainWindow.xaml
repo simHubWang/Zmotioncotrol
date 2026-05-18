@@ -78,7 +78,7 @@
               CornerRadius="16"
               Padding="14,6"
               VerticalAlignment="Center">
-        <TextBlock x:Name="ConnectionStateText" Text="未连接" Foreground="#216E3A" FontWeight="SemiBold" />
+        <TextBlock Text="{Binding ConnectionState}" Foreground="#216E3A" FontWeight="SemiBold" />
       </Border>
     </DockPanel>
 
@@ -101,16 +101,16 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,0,10,0">
                   <TextBlock Text="IP 地址" Style="{StaticResource LabelText}" />
-                  <TextBox x:Name="IpAddressTextBox" Text="192.168.0.11" />
+                  <TextBox Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                   <TextBlock Text="端口" Style="{StaticResource LabelText}" />
-                  <TextBox x:Name="PortTextBox" Text="8089" />
+                  <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
               </Grid>
               <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
-                <Button x:Name="ConnectButton" Content="连接" Width="96" Click="ConnectButton_Click" />
-                <Button x:Name="DisconnectButton" Content="断开" Width="96" Style="{StaticResource SecondaryButton}" Click="DisconnectButton_Click" />
+                <Button Content="连接" Width="96" Command="{Binding ConnectCommand}" />
+                <Button Content="断开" Width="96" Style="{StaticResource SecondaryButton}" Command="{Binding DisconnectCommand}" />
               </StackPanel>
             </StackPanel>
           </Border>
@@ -119,17 +119,17 @@
             <StackPanel>
               <TextBlock Text="轴控制" Style="{StaticResource SectionTitle}" />
               <TextBlock Text="当前轴" Style="{StaticResource LabelText}" />
-              <ComboBox x:Name="AxisComboBox" DisplayMemberPath="Name" SelectedValuePath="Axis" SelectedIndex="0" />
+              <ComboBox ItemsSource="{Binding Axes}" SelectedItem="{Binding SelectedAxis}" DisplayMemberPath="Name" />
 
               <UniformGrid Columns="2" Margin="0,14,0,0">
-                <Button Content="伺服使能" Click="ServoOnButton_Click" />
-                <Button Content="伺服断开" Style="{StaticResource SecondaryButton}" Click="ServoOffButton_Click" />
-                <Button Content="回零" Click="HomeButton_Click" />
-                <Button Content="清除报警" Style="{StaticResource SecondaryButton}" Click="ClearAlarmButton_Click" />
+                <Button Content="伺服使能" Command="{Binding ServoOnCommand}" />
+                <Button Content="伺服断开" Style="{StaticResource SecondaryButton}" Command="{Binding ServoOffCommand}" />
+                <Button Content="回零" Command="{Binding HomeCommand}" />
+                <Button Content="清除报警" Style="{StaticResource SecondaryButton}" Command="{Binding ClearAlarmCommand}" />
               </UniformGrid>
 
               <TextBlock Text="点动速度 mm/s" Style="{StaticResource LabelText}" Margin="0,8,0,6" />
-              <TextBox x:Name="JogSpeedTextBox" Text="20" />
+              <TextBox Text="{Binding JogSpeed, UpdateSourceTrigger=PropertyChanged}" />
               <UniformGrid Columns="2" Margin="0,12,0,0">
                 <Button Content="负向点动" PreviewMouseDown="JogNegativeButton_Down" PreviewMouseUp="JogButton_MouseUp" MouseLeave="JogButton_MouseLeave" />
                 <Button Content="正向点动" PreviewMouseDown="JogPositiveButton_Down" PreviewMouseUp="JogButton_MouseUp" MouseLeave="JogButton_MouseLeave" />
@@ -147,19 +147,19 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,0,8,0">
                   <TextBlock Text="目标/距离 mm" Style="{StaticResource LabelText}" />
-                  <TextBox x:Name="TargetPositionTextBox" Text="100" />
+                  <TextBox Text="{Binding TargetPosition, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="8,0,0,0">
                   <TextBlock Text="速度 mm/s" Style="{StaticResource LabelText}" />
-                  <TextBox x:Name="MoveSpeedTextBox" Text="50" />
+                  <TextBox Text="{Binding MoveSpeed, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
               </Grid>
               <UniformGrid Columns="2" Margin="0,14,0,0">
-                <Button Content="绝对运动" Click="MoveAbsoluteButton_Click" />
-                <Button Content="相对运动" Click="MoveRelativeButton_Click" />
+                <Button Content="绝对运动" Command="{Binding MoveAbsoluteCommand}" />
+                <Button Content="相对运动" Command="{Binding MoveRelativeCommand}" />
               </UniformGrid>
-              <Button Content="单轴停止" Style="{StaticResource SecondaryButton}" Click="StopAxisButton_Click" />
-              <Button Content="急停全部轴" Style="{StaticResource DangerButton}" Click="EmergencyStopButton_Click" />
+              <Button Content="单轴停止" Style="{StaticResource SecondaryButton}" Command="{Binding StopAxisCommand}" />
+              <Button Content="急停全部轴" Style="{StaticResource DangerButton}" Command="{Binding EmergencyStopCommand}" />
             </StackPanel>
           </Border>
         </StackPanel>
@@ -175,7 +175,7 @@
         <Border Style="{StaticResource Panel}">
           <DockPanel>
             <TextBlock DockPanel.Dock="Top" Text="轴状态监控" Style="{StaticResource SectionTitle}" />
-            <DataGrid x:Name="AxisStatusGrid"
+            <DataGrid ItemsSource="{Binding Axes}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
                       HeadersVisibility="Column"
@@ -232,7 +232,7 @@
           <Border Grid.Column="2" Style="{StaticResource Panel}">
             <DockPanel>
               <TextBlock DockPanel.Dock="Top" Text="运行日志" Style="{StaticResource SectionTitle}" />
-              <ListBox x:Name="LogListBox" BorderThickness="0" Background="#FAFBFC" />
+              <ListBox ItemsSource="{Binding Logs}" BorderThickness="0" Background="#FAFBFC" />
             </DockPanel>
           </Border>
         </Grid>

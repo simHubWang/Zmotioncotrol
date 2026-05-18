@@ -15,9 +15,16 @@
 
 ## 真实控制卡接入位置
 
-运动控制接口在 `Services/IMotionController.cs`。
+界面、控制器和底层 API 已分层：
 
-当前界面调用的是 `Services/MockMotionController.cs`。接入正运动控制卡时，新建一个真实实现类，例如 `ZMotionController`，在里面调用正运动提供的 `zauxdll.dll` / `zmcaux.cs` API，例如：
+- `MainWindow.xaml`：界面，只绑定数据和命令。
+- `ViewModels/MainViewModel.cs`：界面数据和按钮命令。
+- `Services/IMotionController.cs`：运动控制业务接口。
+- `Hardware/IMotionCardApi.cs`：底层控制卡 API 接口。
+- `Hardware/SimulatedMotionCardApi.cs`：模拟控制卡。
+- `Hardware/ZMotionCardApi.cs`：正运动真实控制卡 API 接入位置。
+
+当前界面调用的是 `MockMotionController`，内部使用 `SimulatedMotionCardApi`。接入正运动控制卡时，在 `ZMotionCardApi` 里调用正运动提供的 `zauxdll.dll` / `zmcaux.cs` API，例如：
 
 - `ZAux_OpenEth`
 - `ZAux_Close`
@@ -34,10 +41,10 @@
 private readonly IMotionController _controller = new MockMotionController();
 ```
 
-替换为真实控制器：
+替换为真实控制器组合：
 
 ```csharp
-private readonly IMotionController _controller = new ZMotionController();
+_viewModel = new MainViewModel(new MotionController(new ZMotionCardApi()));
 ```
 
 ## 运行
