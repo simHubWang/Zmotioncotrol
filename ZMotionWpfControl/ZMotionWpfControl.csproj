@@ -8,6 +8,10 @@
     <AssemblyName>ZMotionWpfControl</AssemblyName>
     <RootNamespace>ZMotionWpfControl</RootNamespace>
     <NoWarn>$(NoWarn);CS8981</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
     <None Include="zauxdll.dll" CopyToOutputDirectory="PreserveNewest" />

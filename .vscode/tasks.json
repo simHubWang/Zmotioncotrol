@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-x64",
+      "type": "shell",
+      "command": "${workspaceFolder}\\.tools\\dotnet\\dotnet.exe",
+      "args": [
+        "build",
+        "${workspaceFolder}\\ZMotionWpfControl\\ZMotionWpfControl.csproj",
+        "-c",
+        "Debug",
+        "-p:Platform=x64"
+      ],
+      "group": "build",
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}

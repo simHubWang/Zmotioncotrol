@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ZMotionWpfControl x64",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-x64",
+      "program": "${workspaceFolder}\\ZMotionWpfControl\\bin\\x64\\Debug\\net8.0-windows\\win-x64\\ZMotionWpfControl.exe",
+      "cwd": "${workspaceFolder}\\ZMotionWpfControl\\bin\\x64\\Debug\\net8.0-windows\\win-x64",
+      "console": "internalConsole"
+    }
+  ]
+}
