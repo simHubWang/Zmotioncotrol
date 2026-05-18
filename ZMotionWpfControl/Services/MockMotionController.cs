@@ -9,7 +9,9 @@ public sealed class MockMotionController : IMotionController
         new() { Axis = 0, Name = "X轴" },
         new() { Axis = 1, Name = "Y轴" },
         new() { Axis = 2, Name = "Z轴" },
-        new() { Axis = 3, Name = "R轴" }
+        new() { Axis = 3, Name = "R轴" },
+        new() { Axis = 4, Name = "A轴" },
+        new() { Axis = 5, Name = "B轴" }
     ];
 
     public bool IsConnected { get; private set; }

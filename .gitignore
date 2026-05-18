@@ -3,6 +3,7 @@ bin/
 obj/
 Debug/
 Release/
+publish/
 x64/
 x86/
 
