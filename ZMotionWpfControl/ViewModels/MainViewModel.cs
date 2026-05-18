@@ -38,6 +38,7 @@ public sealed class MainViewModel : ObservableObject
         StopJogCommand = new AsyncRelayCommand(StopJogAsync);
 
         AddLog("程序启动，当前使用正运动控制卡 API。");
+        AddLog($"运行目录：{AppContext.BaseDirectory}");
     }
 
     public ObservableCollection<AxisStatus> Axes { get; }

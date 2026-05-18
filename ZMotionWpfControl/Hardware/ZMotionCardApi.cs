@@ -1,4 +1,5 @@
 using cszmcaux;
+using System.IO;
 using ZMotionWpfControl.Models;
 
 namespace ZMotionWpfControl.Hardware;
@@ -31,7 +32,21 @@ public sealed class ZMotionCardApi : IMotionCardApi
             return Task.CompletedTask;
         }
 
-        CheckResult(zmcaux.ZAux_OpenEth(ipAddress, out _handle), "连接控制卡");
+        EnsureNativeLibrariesExist();
+
+        try
+        {
+            CheckResult(zmcaux.ZAux_OpenEth(ipAddress, out _handle), "连接控制卡");
+        }
+        catch (DllNotFoundException ex)
+        {
+            throw new InvalidOperationException(CreateNativeLoadErrorMessage(), ex);
+        }
+        catch (BadImageFormatException ex)
+        {
+            throw new InvalidOperationException("正运动 DLL 位数与程序不匹配，请确认使用 x64 版本 DLL。", ex);
+        }
+
         IsOpen = true;
         RefreshAllAxes();
         return Task.CompletedTask;
@@ -185,5 +200,25 @@ public sealed class ZMotionCardApi : IMotionCardApi
         {
             throw new InvalidOperationException($"{operation}失败，错误码：{result}");
         }
+    }
+
+    private static void EnsureNativeLibrariesExist()
+    {
+        var appDirectory = AppContext.BaseDirectory;
+        var zauxPath = Path.Combine(appDirectory, "zauxdll.dll");
+        var zmotionPath = Path.Combine(appDirectory, "zmotion.dll");
+
+        if (!File.Exists(zauxPath) || !File.Exists(zmotionPath))
+        {
+            throw new InvalidOperationException(
+                $"正运动 DLL 未复制到运行目录。运行目录：{appDirectory}");
+        }
+    }
+
+    private static string CreateNativeLoadErrorMessage()
+    {
+        return "已找到 zauxdll.dll 和 zmotion.dll，但 Windows 无法加载 zauxdll.dll。"
+            + "通常是缺少它依赖的 VC++ 运行库或厂家配套 DLL。"
+            + $"运行目录：{AppContext.BaseDirectory}";
     }
 }
